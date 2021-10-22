@@ -7,3 +7,9 @@
 # Instructions
 - The program expects two command line arguments after the executable: **./SortingAlgorithmsVisualizer [sorting-algorithm-name] sort**. 
 - Selection sort as an example: **./SortingAlgorithmsVisualizer selection sort**.
+
+# Program Files
+- main.cpp - main program
+- SortingAlgorithms.h/SortingAlgorithms.cpp - sorting algorithms interface
+- Makefile - makefile for compiling the program
+- artial.ttf - text font file
