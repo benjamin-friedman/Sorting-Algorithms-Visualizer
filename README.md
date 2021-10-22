@@ -9,7 +9,7 @@
 - Selection sort as an example: **./SortingAlgorithmsVisualizer selection sort**.
 
 # Program Files
-- main.cpp - main program
-- SortingAlgorithms.h/SortingAlgorithms.cpp - sorting algorithms interface
-- Makefile - makefile for compiling the program
-- artial.ttf - text font file
+- main.cpp - Main program
+- SortingAlgorithms.h/SortingAlgorithms.cpp - Sorting algorithms interface
+- Makefile - For compiling the program in Linux.
+- artial.ttf - Text font file
