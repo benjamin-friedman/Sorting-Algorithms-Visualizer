@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Sorting Algorithms Visualizer");
 
     /* The integer at index "i" is the height of the rectangle at index "i".
-       As the array gets sorted, the corresponding rectangle has it's height updated
+       As the array gets sorted, the corresponding rectangle has its height updated
        thus visualizing the sorting process */
     std::vector<sf::RectangleShape*> recs;
     int numbers[totalNumbers];
