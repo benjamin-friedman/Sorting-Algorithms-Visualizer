@@ -8,22 +8,37 @@
 #include <SFML/Graphics.hpp>
 #include "SortingAlgorithms.h"
 
-// SFML window
+/***** SFML window *****/
 const int windowWidth = 1250;
 const int windowHeight = 600;
 extern const int totalNumbers = 250;
 
-// Sorting Algorithms
+
+/***** Sorting Algorithms - names and time complexities *****/
 const std::string acceptableSortingAlgorithms[] = { "bubble", "selection", "insertion", "shell", "quick", "heap", "merge", "counting", "bucket", "radix" };
 const int acceptableSortingAlgorithmsSize = sizeof(acceptableSortingAlgorithms) / sizeof(*acceptableSortingAlgorithms);
 const std::string bestTimeComplexities[] = { "N", "N^2", "N", "Nlog(N)", "Nlog(N)", "Nlog(N)", "Nlog(N)", "N + K", "N + K", "NK" };
 const std::string averageTimeComplexities[] = { "N^2", "N^2", "N^2", "depends on gap sequence", "Nlog(N)", "Nlog(N)", "Nlog(N)", "N + K", "N + K", "NK" };
 const std::string worstTimeComplexities[] = { "N^2", "N^2", "N^2", "N^2", "N^2", "Nlog(N)", "Nlog(N)", "N + K", "N^2", "NK" };
-/* General Helper Functions */
+
+
+/***** General Helper Functions *****/
+/* Creates an array of positive random integers with a given start and end range. */
 void randomizeArray(int *a, int size, int startRange, int endRange);
+
+/* Initializes a vector of rectangles where the height of each rectangle at index "i" in the vector corresponds to the magnitude of the
+   number at index "i" in the array. */
 void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* a, int size, double recWidth);
+
+/* Updates the height of each rectangle in the vector based on how the array has been sorted at some instantaneous point in time. By updating
+   the heights, the current progress of the sorting process is kept up to date in the vector of rectangles. */
 void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int *a);
+
+/* Prints out all of the rectangles to the screen allowing it to be visualized how the array of integers looks during an instantaneous moment
+   during the sorting process. */
 void printRectangles(const std::vector<std::shared_ptr<sf::RectangleShape>>& recs, sf::RenderWindow& window, const sf::Text& title);
+
+/* Creates the title string based on the sorting algorithm selected - this title appears in the SFML window. */
 std::string createTitle(const std::string& sortingAlgorithmSelected);
 
 
