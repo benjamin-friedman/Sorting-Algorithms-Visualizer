@@ -60,7 +60,6 @@ int main(int argc, char* argv[])
 { 
     validateCLA(argc, argv);
 
-
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Sorting Algorithms Visualizer");
     std::vector<std::shared_ptr<sf::RectangleShape>> recs;
     int numbers[totalNumbers];
