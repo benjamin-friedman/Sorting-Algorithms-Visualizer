@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
     title.setFillColor(sf::Color::Black);
     title.setCharacterSize(20);
     std::string titleString = createTitleString(sortingAlgorithmSelected);
-    title.setString(std::move(titleString));
+    title.setString(titleString);
 
     // choose the correct sorting algorithm
     assignSortingAlgorithm(&fpSortingAlgorithm, sortingAlgorithmSelected);
