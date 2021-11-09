@@ -58,28 +58,18 @@ void assignSortingAlgorithm(void (**fpSortingAlgorithm)(int*, int), const std::s
 
 int main(int argc, char* argv[])
 { 
-    /* validate command line arguments */
     validateCLA(argc, argv);
 
-
-    /* begin the program */
-    //SFML Window
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Sorting Algorithms Visualizer");
-
-    /* The integer at index i in "numbers" is the height of the rectangle at index i in "recs".
-       As the array gets sorted, the corresponding rectangle has it height updated thus
-       visualizing the sorting process */
     std::vector<std::shared_ptr<sf::RectangleShape>> recs;
     int numbers[totalNumbers];
     void (*fpSortingAlgorithm)(int*, int);
     std::string sortingAlgorithmSelected(argv[1]);
     const double recWidth = static_cast<double>(windowWidth) / totalNumbers;
 
-    // fill up the array with random numbers and initialize the rectangles
     randomizeArray(numbers, totalNumbers, 0, windowHeight * 0.8);
     initializeRectangles(recs, numbers, totalNumbers, recWidth);
 
-    // setup the title based on which sorting algorithm was selected 
     sf::Text title;
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
@@ -92,10 +82,7 @@ int main(int argc, char* argv[])
     std::string titleString = createTitleString(sortingAlgorithmSelected);
     title.setString(titleString);
 
-    // choose the correct sorting algorithm
     assignSortingAlgorithm(&fpSortingAlgorithm, sortingAlgorithmSelected);
-    
-    // start the sorting and visualization
     std::thread sortingAlgorithm(fpSortingAlgorithm, numbers, totalNumbers);
 
     while (window.isOpen())
