@@ -30,7 +30,7 @@ const std::string averageTimeComplexities[] = { "N^2", "N^2", "N^2", "depends on
 const std::string worstTimeComplexities[] = { "N^2", "N^2", "N^2", "N^2", "N^2", "Nlog(N)", "Nlog(N)", "N + K", "N^2", "NK" };
 
 /***** General Helper Functions *****/
-/* Validates the command line arguments */
+/* Validates the command line arguments. */
 void validateCLA(int argc, char* argv[]);
 
 /* Creates an array of positive random integers with a given start and end range. */
