@@ -5,7 +5,7 @@
 
 
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -Og -g -fsanitize=undefined # comment out -Og... when done debugging
+CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic #-Og -g -fsanitize=undefined # comment out -Og... when done debugging
 LDLIBS = -pthread -lsfml-graphics -lsfml-window -lsfml-system
 EXE1 = SortingAlgorithmsVisualizer
 OBJ1 = Main.o SortingAlgorithms.o
