@@ -1,7 +1,7 @@
 /*
   Author: Benjamin G. Friedman
   Date: 11/08/2022
-  File: main.cpp
+  File: Main.cpp
   Description:
       - The main function for the sorting algorithms visualization. In summary, there is an array of positive integers
         and a vector of rectangle objects where the magnitude of an integer at index i corresponds to the height of the
