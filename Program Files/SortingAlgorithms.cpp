@@ -3,7 +3,7 @@
   Date: 11/08/2022
   File: SortingAlgorithms.cpp
   Description:
-      - The implementation file for the sorting algorithms. Also includes various helper functions.
+      - Implementation file for the sorting algorithms. Also includes various helper functions.
         The linked list interface is necessary for bucket sort.
 */
 
