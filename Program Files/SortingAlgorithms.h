@@ -3,7 +3,7 @@
   Date: 11/08/2022
   File: SortingAlgorithms.h
   Description:
-      - The header file for the sorting algorithms.
+      - Header file for the sorting algorithms.
 */
 
 
