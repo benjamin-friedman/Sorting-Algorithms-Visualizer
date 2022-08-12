@@ -18,4 +18,4 @@ SortingAlgorithms.o: SortingAlgorithms.cpp SortingAlgorithms.h
 	$(CXX) $(CXXFLAGS) -c SortingAlgorithms.cpp -o SortingAlgorithms.o
 
 clean:
-	rm $(EXE) $(OBJ)
+	-rm $(EXE) $(OBJ)
