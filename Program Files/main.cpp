@@ -1,11 +1,13 @@
 /*
-  Copyright (C) 2021 Benjamin G. Friedman.
-  
-  main.cpp - Contains the main function for the sorting algorithms visualization. In summary, there is an array of
-  positive integers and a vector of rectangle objects where the magnitude of an integer at index i corresponds to
-  the height of the rectangle at index i. As the array gets sorted, the heights of the rectangles simultaneously
-  get updated to visualize the sorting process.
+  Author: Benjamin G. Friedman.
+  File: main.cpp
+  Description:
+      - Contains the main function for the sorting algorithms visualization. In summary, there is an array of
+        positive integers and a vector of rectangle objects where the magnitude of an integer at index i corresponds to
+        the height of the rectangle at index i. As the array gets sorted, the heights of the rectangles simultaneously
+        get updated to visualize the sorting process.
 */
+
 
 #include <iostream>
 #include <cstdlib>
@@ -17,31 +19,34 @@
 #include <SFML/Graphics.hpp>
 #include "SortingAlgorithms.h"
 
+
+// Global variables
 // SFML window
 const int windowWidth = 1250;
 const int windowHeight = 600;
-extern const int totalNumbers = 250;
+extern const size_t totalNumbers = 250;
 
 // Sorting Algorithms
 const std::string acceptableSortingAlgorithms[] = { "bubble", "selection", "insertion", "shell", "quick", "heap", "merge", "counting", "bucket", "radix" };
-const int acceptableSortingAlgorithmsSize = sizeof(acceptableSortingAlgorithms) / sizeof(*acceptableSortingAlgorithms);
+const size_t acceptableSortingAlgorithmsSize = sizeof(acceptableSortingAlgorithms) / sizeof(*acceptableSortingAlgorithms);
 const std::string bestTimeComplexities[] = { "N", "N^2", "N", "Nlog(N)", "Nlog(N)", "Nlog(N)", "Nlog(N)", "N + K", "N + K", "NK" };
 const std::string averageTimeComplexities[] = { "N^2", "N^2", "N^2", "depends on gap sequence", "Nlog(N)", "Nlog(N)", "Nlog(N)", "N + K", "N + K", "NK" };
 const std::string worstTimeComplexities[] = { "N^2", "N^2", "N^2", "N^2", "N^2", "Nlog(N)", "Nlog(N)", "N + K", "N^2", "NK" };
+
 
 /***** General Helper Functions *****/
 /* Validates the command line arguments. */
 void validateCLA(int argc, char* argv[]);
 
 /* Creates an array of positive random integers with a given start and end range. */
-void randomizeArray(int *a, int size, int startRange, int endRange);
+void randomizeArray(int *a, size_t size, int startRange, int endRange);
 
 /* Initializes a vector of rectangles where the height of each rectangle at index "i" in the vector corresponds to the magnitude of the
    number at index "i" in the array. */
-void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* a, int size, double recWidth);
+void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* a, size_t size, double recWidth);
 
 /* Initializes the title diplayed in the window showing the sorting algorithms name and its time complexities. */
-void initializeTitle(sf::Text& title, sf::Font& font, const std::string sortingAlgorithmSelected);
+void initializeTitle(sf::Text& title, sf::Font& font, const std::string& sortingAlgorithmSelected);
 
 /* Creates the string for the title.  */
 std::string createTitleString(const std::string& sortingAlgorithmSelected);
@@ -62,23 +67,24 @@ void assignSortingAlgorithm(void (**fpSortingAlgorithm)(int*, int), const std::s
 
 int main(int argc, char* argv[]) { 
     
+    // Validate command line arguments
     validateCLA(argc, argv);
 
-
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Sorting Algorithms Visualizer");
-    std::vector<std::shared_ptr<sf::RectangleShape>> recs;
-    int numbers[totalNumbers];
-    void (*fpSortingAlgorithm)(int*, int);
-    std::string sortingAlgorithmSelected(argv[1]);
+    std::vector<std::shared_ptr<sf::RectangleShape>> recs;    // Rectangles
+    int numbers[totalNumbers];                                // Array to be sorted
+    void (*fpSortingAlgorithm)(int*, int);                    // Sorting algorithm function
+    std::string sortingAlgorithmSelected(argv[1]);            
     const double recWidth = static_cast<double>(windowWidth) / totalNumbers;
-
-    randomizeArray(numbers, totalNumbers, 0, windowHeight * 0.8);
-    initializeRectangles(recs, numbers, totalNumbers, recWidth);
-
     sf::Font font;
     sf::Text title;
+
+    // Initialize the array, rectangles, and title
+    randomizeArray(numbers, totalNumbers, 0, windowHeight * 0.8);
+    initializeRectangles(recs, numbers, totalNumbers, recWidth);
     initializeTitle(title, font, sortingAlgorithmSelected);
 
+    // Begin the sorting process and visualization
     assignSortingAlgorithm(&fpSortingAlgorithm, sortingAlgorithmSelected);
     std::thread sortingAlgorithm(fpSortingAlgorithm, numbers, totalNumbers);
 
@@ -102,7 +108,7 @@ int main(int argc, char* argv[]) {
 
 
 
-/***** General Helper Function Definitions *****/
+/***** General Helper Function Defintions *****/
 void validateCLA(int argc, char* argv[]) {
     if (argc != 3) {
 	std::cout << "Command line argument error. Expected \"./SortingAlgorithmVisualizer [sorting-algorithm-name] sort\"\n\n";
@@ -118,14 +124,14 @@ void validateCLA(int argc, char* argv[]) {
     }
 
     bool validSelection = false;
-    for (int i = 0; i < acceptableSortingAlgorithmsSize && !validSelection; i++) {
+    for (size_t i = 0; i < acceptableSortingAlgorithmsSize && !validSelection; ++i) {
 	if (sortingAlgorithmSelected == acceptableSortingAlgorithms[i])
 	    validSelection = true;
     }
 
     if (!validSelection) {
 	std::cout << "Command line argument error. Valid sorting algorithms are as follows:\n";
-	for (int i = 0; i < acceptableSortingAlgorithmsSize && !validSelection; i++)
+	for (size_t i = 0; i < acceptableSortingAlgorithmsSize && !validSelection; ++i)
 	    std::cout << acceptableSortingAlgorithms[i] << " sort" << std::endl;
 	std::cout << std::endl;
 	exit(3);
@@ -134,19 +140,19 @@ void validateCLA(int argc, char* argv[]) {
 
 
 
-void randomizeArray(int *a, int size, int startRange, int endRange) {
+void randomizeArray(int *a, size_t size, int startRange, int endRange) {
     std::random_device device;
     std::mt19937 generator(device());
     std::uniform_int_distribution<int> dist(startRange, endRange);
 
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; ++i)
 	a[i] = dist(generator);
 }
 
 
 
-void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* a, int size, double recWidth) {
-    for (int i = 0; i < size; i++) {
+void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* a, size_t size, double recWidth) {
+    for (size_t i = 0; i < size; ++i) {
 	auto rec = std::make_shared<sf::RectangleShape>();
 	rec->setFillColor(sf::Color::Blue);
 	rec->setOutlineColor(sf::Color::Black);
@@ -159,7 +165,7 @@ void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs
 
 
 
-void initializeTitle(sf::Text& title, sf::Font& font, const std::string sortingAlgorithmSelected) {
+void initializeTitle(sf::Text& title, sf::Font& font, const std::string& sortingAlgorithmSelected) {
     if (!font.loadFromFile("arial.ttf")) {
 	std::cout << "Error. Failed to load font file\n\n";
 	exit(4);
@@ -175,7 +181,7 @@ void initializeTitle(sf::Text& title, sf::Font& font, const std::string sortingA
 
 std::string createTitleString(const std::string& sortingAlgorithmSelected) {
     std::string titleString(sortingAlgorithmSelected);
-    int index;
+    size_t index;
     if (titleString == "bubble")
 	index = 0;
     else if (titleString == "selection")
@@ -209,7 +215,7 @@ std::string createTitleString(const std::string& sortingAlgorithmSelected) {
 
 void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int *a) {
     sf::Vector2f temp;
-    for (unsigned i = 0; i < recs.size(); i++) {
+    for (size_t i = 0; i < recs.size(); ++i) {
 	if (recs[i]->getSize().y != a[i]) {
 	    temp.x = recs[i]->getSize().x;
 	    temp.y = a[i];
@@ -225,7 +231,7 @@ void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, co
 
 void printRectangles(const std::vector<std::shared_ptr<sf::RectangleShape>>& recs, sf::RenderWindow& window, const sf::Text& title) {
     window.clear(sf::Color::White);
-    for (auto rec = recs.begin(); rec != recs.end(); rec++)
+    for (auto rec = recs.begin(); rec != recs.end(); ++rec)
 	window.draw(**rec);
     window.draw(title);
     window.display();
