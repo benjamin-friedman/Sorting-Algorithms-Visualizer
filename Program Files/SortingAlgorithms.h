@@ -1,5 +1,6 @@
 /*
   Author: Benjamin G. Friedman
+  Date: November 8th, 2021
   File: SortingAlgorithms.h
   Description:
       - The header file for all of the sorting algorithms.
