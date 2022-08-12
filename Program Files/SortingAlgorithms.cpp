@@ -1,6 +1,9 @@
 /*
-  SortingAlgorithms.cpp - The implementation file for the sorting algorithms. Also includes various
-  helper functions. The linked list interface is necessary for bucket sort.
+  Author: Benjamin G. Friedman
+  File: SortingAlgorithms.cpp
+  Description:
+      - The implementation file for the sorting algorithms. Also includes various helper functions.
+        The linked list interface is necessary for bucket sort.
 */
 
 
@@ -11,7 +14,7 @@
 #include <algorithm>
 #include <iostream>
 
-extern const int totalNumbers;	// 250
+extern const size_t totalNumbers;	// 250
 const int totalBuckets = 25;
 const int bucketInterval = 100;
 
@@ -38,9 +41,8 @@ void countSort(int* a, int size, int exp);
 
 /* Sorting Algorithm Function Definitions */
 void bubbleSort(int *a, int size) {
-    int i, j;
-    for (i = 0; i < size - 1; i++) {
-	for (j = 0; j < size - 1 - i; j++) {
+    for (int i = 0; i < size - 1; ++i) {
+	for (int j = 0; j < size - 1 - i; ++j) {
 	    if (a[j] > a[j + 1]) {
 		swap(&a[j], &a[j + 1]);
 		usleep(1500);
@@ -52,7 +54,7 @@ void bubbleSort(int *a, int size) {
 
 
 void selectionSort(int *a, int size) {
-    for (int i = 0; i < size - 1; i++) {
+    for (int i = 0; i < size - 1; ++i) {
 	swap(&a[i], &a[indexOfMin(a, size, i)]);
 	usleep(100000);
     }
@@ -61,10 +63,10 @@ void selectionSort(int *a, int size) {
 
 
 void insertionSort(int *a, int size) {
-    int i, j, item_index;
-    for (i = 1; i < size; i++) {
+    int item_index;
+    for (int i = 1; i < size; ++i) {
 	item_index = i;
-	for (j = i - 1; j >= 0 && a[item_index] < a[j]; j--) {
+	for (int j = i - 1; j >= 0 && a[item_index] < a[j]; --j) {
 	    swap(&a[item_index], &a[j]);
 	    item_index = j;
 	    usleep(1750);
@@ -75,15 +77,16 @@ void insertionSort(int *a, int size) {
 
 
 void shellSort(int *a, int size) {
-    int i, j, temp, h = 2;
+    int temp, h = 2;
 
     while (h < size / 3)
 	h *= 2;
     h--;
 
     while (h > 0) {
-	for (i = h; i < size; i++) {
+	for (int i = h; i < size; ++i) {
 	    temp = a[i];
+	    int j;
 	    for (j = i - h; j >= 0 && temp < a[j]; j -= h) {
 		a[j + h] = a[j];
 		usleep(20000);
@@ -134,16 +137,15 @@ void quickSort(int *a, int size) {
 
 
 void heapSort(int *a, int size) {
-    int i;
-    for (i = size / 2 - 1; i >= 0; i--) {
+    for (int i = size / 2 - 1; i >= 0; --i) {
 	fixDown(a, size, i);
 	usleep(70000);
     }
 
     int originalSize = size;
-    for (i = 0; i < originalSize - 1; i++) {
+    for (int i = 0; i < originalSize - 1; ++i) {
 	removeTheMax(a, size);
-	size--;
+	--size;
 	usleep(70000);
     }
 }
@@ -177,28 +179,28 @@ void mergeSort(int *a, int *L, int *R, int l, int r) {
 
 void countingSort(int* a, int size) {
     int max = a[0];
-    for (int i = 1; i < size; i++) {
+    for (int i = 1; i < size; ++i) {
 	if (a[i] > max)
 	    max = a[i];
     }
     int* count = new int[max + 1];
     int* output = new int[totalNumbers];
 
-    for (int i = 0; i <= max; i++)
+    for (int i = 0; i <= max; ++i)
 	count[i] = 0;
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; ++i)
 	count[a[i]]++;
 
-    for (int i = 1; i <= max; i++)
+    for (int i = 1; i <= max; ++i)
 	count[i] += count[i - 1];
 
-    for (int i = size - 1; i >= 0; i--) {
+    for (int i = size - 1; i >= 0; --i) {
 	output[count[a[i]] - 1] = a[i];
 	count[a[i]]--;
     }
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; ++i) {
 	usleep(100000);
 	a[i] = output[i];
     }
@@ -210,13 +212,12 @@ void countingSort(int* a, int size) {
 
 
 void bucketSort(int* a, int size) {
-    int i, j;
     Node** buckets = new Node*[totalBuckets];
 
-    for (i = 0; i < totalBuckets; i++)
+    for (int i = 0; i < totalBuckets; ++i)
 	buckets[i] = nullptr;
 
-    for (i = 0; i < size; i++) {
+    for (int i = 0; i < size; ++i) {
 	int pos = getBucketIndex(a[i]);
 	Node* current = new Node;
 	current->data = a[i];
@@ -224,10 +225,10 @@ void bucketSort(int* a, int size) {
 	buckets[pos] = current;
     }
 
-    for (i = 0; i < totalBuckets; i++)
+    for (int i = 0; i < totalBuckets; ++i)
 	buckets[i] = insertionSort(buckets[i]);
 
-    for (j = 0, i = 0; i < totalBuckets; ++i) {
+    for (int j = 0, i = 0; i < totalBuckets; ++i) {
 	Node* node = buckets[i];
 	while (node != nullptr) {
 	    a[j++] = node->data;
@@ -236,7 +237,7 @@ void bucketSort(int* a, int size) {
 	}
     }
 
-    for (int i = 0; i < totalBuckets; i++) {
+    for (int i = 0; i < totalBuckets; ++i) {
 	Node* current = buckets[i];
 	while (current != nullptr) {
 	    Node* next = current->next;
@@ -271,7 +272,7 @@ void swap(int *n1, int *n2) {
 
 int indexOfMin(int *a, int size, int starting_index) {
     int index_of_min = starting_index;
-    for (int i = starting_index + 1; i < size; i++) {
+    for (int i = starting_index + 1; i < size; ++i) {
 	if (a[i] < a[index_of_min])
 	    index_of_min = i;
     }
@@ -315,9 +316,9 @@ void merge(int *a, int *L, int *R, int l, int m, int r) {
     int n1 = m - l + 1;
     int n2 = r - m;
   
-    for (i = 0; i < n1; i++)
+    for (i = 0; i < n1; ++i)
         L[i] = a[l + i];
-    for (j = 0; j < n2; j++)
+    for (j = 0; j < n2; ++j)
         R[j] = a[m + 1 + j];
   
     i = 0;
@@ -326,37 +327,36 @@ void merge(int *a, int *L, int *R, int l, int m, int r) {
     while (i < n1 && j < n2) {
         if (L[i] <= R[j]) {
             a[k] = L[i];
-            i++;
+            ++i;
         }
         else {
             a[k] = R[j];
-            j++;
+            ++j;
         }
 	usleep(5000);
-        k++;
+        ++k;
     }
   
     while (i < n1) {
         a[k] = L[i];
-        i++;
-        k++;
+        ++i;
+        ++k;
 	usleep(5000);
     }
   
     while (j < n2) {
         a[k] = R[j];
-        j++;
-        k++;
+        ++j;
+        ++k;
 	usleep(5000);
     }
 }
 
 
 
-int getMax(int* a, int size)
-{
+int getMax(int* a, int size) {
     int max = a[0];
-    for (int i = 1; i < size; i++)
+    for (int i = 1; i < size; ++i)
         if (a[i] > max)
             max = a[i];
     return max;
@@ -413,22 +413,21 @@ int getBucketIndex(int value) {
 
 
 
-void countSort(int* a, int size, int exp)
-{
+void countSort(int* a, int size, int exp) {
     int* output = new int[size];
-    int i, count[10] = { 0 };
+    int count[10] = { 0 };
  
-    for (i = 0; i < size; i++) {
+    for (int i = 0; i < size; ++i) {
         count[(a[i] / exp) % 10]++;
     }
-    for (i = 1; i < 10; i++) {
+    for (int i = 1; i < 10; ++i) {
         count[i] += count[i - 1];
     }
-    for (i = size - 1; i >= 0; i--) {
+    for (int i = size - 1; i >= 0; --i) {
         output[count[(a[i] / exp) % 10] - 1] = a[i];
         count[(a[i] / exp) % 10]--;
     }
-    for (i = 0; i < size; i++) {
+    for (int i = 0; i < size; ++i) {
         a[i] = output[i];
 	usleep(35000);
     }
