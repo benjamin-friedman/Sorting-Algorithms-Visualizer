@@ -3,10 +3,10 @@
   Date: November 8th, 2021
   File: main.cpp
   Description:
-      - Contains the main function for the sorting algorithms visualization. In summary, there is an array of
-        positive integers and a vector of rectangle objects where the magnitude of an integer at index i corresponds to
-        the height of the rectangle at index i. As the array gets sorted, the heights of the rectangles simultaneously
-        get updated to visualize the sorting process.
+      - The main function for the sorting algorithms visualization. In summary, there is an array of positive integers
+        and a vector of rectangle objects where the magnitude of an integer at index i corresponds to the height of the
+	rectangle at index i. As the array gets sorted, the heights of the rectangles simultaneously get updated to visualize
+	the sorting process.
 */
 
 
