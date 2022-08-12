@@ -1,7 +1,7 @@
 # Author: Benjamin G. Friedman
 # Date: 11/08/2022
 # File: Makefile
-# Description: Makefile for the matrix calculations program.
+# Description: Makefile for the sorting algorithms visualizer program.
 
 
 CXX = g++
