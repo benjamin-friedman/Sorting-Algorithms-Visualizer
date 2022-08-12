@@ -1,5 +1,6 @@
 /*
-  Author: Benjamin G. Friedman.
+  Author: Benjamin G. Friedman
+  Date: November 8th, 2021
   File: main.cpp
   Description:
       - Contains the main function for the sorting algorithms visualization. In summary, there is an array of
