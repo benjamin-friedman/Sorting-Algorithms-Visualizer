@@ -26,7 +26,7 @@ const int windowWidth = 1250;
 const int windowHeight = 600;
 extern const size_t totalNumbers = 250;
 
-// Sorting Algorithms
+// Sorting algorithms
 const std::string acceptableSortingAlgorithms[] = { "bubble", "selection", "insertion", "shell", "quick", "heap", "merge", "counting", "bucket", "radix" };
 const size_t acceptableSortingAlgorithmsSize = sizeof(acceptableSortingAlgorithms) / sizeof(*acceptableSortingAlgorithms);
 const std::string bestTimeComplexities[] = { "N", "N^2", "N", "Nlog(N)", "Nlog(N)", "Nlog(N)", "Nlog(N)", "N + K", "N + K", "NK" };
