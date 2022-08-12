@@ -1,5 +1,8 @@
 /*
-  SortingAlgorithms.h - The header file for all of the sorting algorithms
+  Author: Benjamin G. Friedman
+  File: SortingAlgorithms.h
+  Description:
+      - The header file for all of the sorting algorithms.
 */
 
 
