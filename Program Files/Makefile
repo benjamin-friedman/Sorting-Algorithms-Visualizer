@@ -1,3 +1,9 @@
+# Author: Benjamin G. Friedman
+# Date: November 8th, 2021
+# File: Makefile
+# Description: Makefile for the matrix calculations program.
+
+
 CXX = g++
 CXXFLAGS = -std=c++17 -g -Wall -Werror -pedantic -pthread
 SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
