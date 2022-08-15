@@ -16,8 +16,8 @@
 
 
 /***** Global variables and structures *****/
-extern const size_t totalNumbers;	// 250
-const int totalBuckets = 25;        // bucket sort
+extern const size_t totalNumbers;    // 250
+const int totalBuckets = 25;         // bucket sort
 const int bucketInterval = 100;
 
 
