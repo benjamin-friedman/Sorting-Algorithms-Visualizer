@@ -10,7 +10,8 @@
 #ifndef SORTING_ALGORITHMS_H
 #define SORTING_ALGORITHMS_H
 
-/* Sorting Algorithms */
+
+/***** Functions defined in SortingAlgorithms.cpp *****/
 void bubbleSort(int* a, int size);
 void selectionSort(int* a, int size);
 void insertionSort(int* a, int size);
@@ -21,5 +22,6 @@ void mergeSort(int* a, int size);
 void countingSort(int* a, int size);
 void bucketSort(int* a, int size);
 void radixSort(int* a, int size);
+
 
 #endif
