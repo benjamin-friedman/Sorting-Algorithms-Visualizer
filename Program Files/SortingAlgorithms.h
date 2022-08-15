@@ -17,7 +17,7 @@ void insertionSort(int* a, int size);
 void shellSort(int* a, int size);
 void quickSort(int* a, int size);
 void heapSort(int* a, int size);
-void mergeSortWrapper(int* a, int size);
+void mergeSort(int* a, int size);
 void countingSort(int* a, int size);
 void bucketSort(int* a, int size);
 void radixSort(int* a, int size);
