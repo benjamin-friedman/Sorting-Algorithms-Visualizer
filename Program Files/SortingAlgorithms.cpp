@@ -27,7 +27,7 @@ typedef struct node {    // bucket sort
 } Node;
 
 
-/***** Helper functions declared/defined in this file *****/
+/***** Helper functions used only in this file *****/
 static void swap(int* n1, int* n2);                                   // most algorithms
 static int indexOfMin(int* a, int size, int starting_index);          // selection sort
 static void fixDown(int* a, int size, int index);                     // heap sort
@@ -252,7 +252,7 @@ void radixSort(int* a, int size) {
 
 
 
-/***** Helper functions declared/defined in this file *****/
+/***** Helper functions used only in this file *****/
 static void swap(int* n1, int* n2) {
     int temp = *n1;
     *n1 = *n2;
