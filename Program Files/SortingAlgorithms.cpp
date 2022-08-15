@@ -42,7 +42,7 @@ static void countSort(int* a, int size, int exp);
 
 
 
-/****** Sorting algorithms declared in SortingAlgorithms.h ******/
+/****** Functions declared in SortingAlgorithms.h ******/
 void bubbleSort(int* a, int size) {
     for (int i = 0; i < size - 1; ++i) {
         for (int j = 0; j < size - 1 - i; ++j) {
