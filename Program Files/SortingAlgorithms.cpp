@@ -14,9 +14,11 @@
 #include <algorithm>
 #include <iostream>
 
+
 extern const size_t totalNumbers;	// 250
 const int totalBuckets = 25;
 const int bucketInterval = 100;
+
 
 typedef struct node {
     int data;
@@ -35,6 +37,8 @@ static Node* insertionSortBucketSort(Node* list);	           // bucket sort
 static int getBucketIndex(int value);
 static int getMax(int* a, int size);				   // radix sort
 static void countSort(int* a, int size, int exp);		
+
+
 
 
 /* Sorting Algorithm Function Definitions */
@@ -162,19 +166,6 @@ void mergeSort(int* a, int size) {
 
 
 
-void mergeSortActual(int *a, int *L, int *R, int l, int r) {
-    if (l < r) {
-        int m = l + (r - l) / 2;
- 	
-	usleep(50000); 
-        mergeSortActual(a, L, R, l, m);
-        mergeSortActual(a, L, R, m + 1, r); 
-        merge(a, L, R, l, m, r);
-    }
-}
-
-
-
 void countingSort(int* a, int size) {
     int max = a[0];
     for (int i = 1; i < size; ++i) {
@@ -259,6 +250,8 @@ void radixSort(int* a, int size) {
 
 
 
+
+
 /***** Helper Function Definitions *****/
 static void swap(int *n1, int *n2) {
     int temp = *n1;
@@ -305,6 +298,19 @@ static void fixDown(int *a, int size, int index) {
 static void removeTheMax(int *a, int size) {
     swap(&a[0], &a[size - 1]);
     fixDown(a, size - 1, 0);
+}
+
+
+
+static void mergeSortActual(int *a, int *L, int *R, int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+ 	
+	usleep(50000); 
+        mergeSortActual(a, L, R, l, m);
+        mergeSortActual(a, L, R, m + 1, r); 
+        merge(a, L, R, l, m, r);
+    }
 }
 
 
