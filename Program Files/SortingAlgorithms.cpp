@@ -25,18 +25,18 @@ typedef struct node {
 
 
 /* Actual merge sort */
-void mergeSort(int *a, int *L, int *R, int l, int r);
+static void mergeSort(int *a, int *L, int *R, int l, int r);
 
 /* Helper Functions */
-void swap(int *n1, int *n2);				    // most algorithms
-int indexOfMin(int *a, int size, int starting_index);	    // selection sort
-void fixDown(int *a, int size, int index);		    // heap sort
-void removeTheMax(int *a, int size);			    // heap sort
-void merge(int *a, int *L, int *R, int l, int m, int r);    // merge sort
-Node* insertionSort(Node* list);			    // bucket sort
-int getBucketIndex(int value);
-int getMax(int* a, int size);				    // radix sort
-void countSort(int* a, int size, int exp);		
+static void swap(int *n1, int *n2);				   // most algorithms
+static int indexOfMin(int *a, int size, int starting_index);	   // selection sort
+static void fixDown(int *a, int size, int index);		   // heap sort
+static void removeTheMax(int *a, int size);			   // heap sort
+static void merge(int *a, int *L, int *R, int l, int m, int r);    // merge sort
+static Node* insertionSortBucketSort(Node* list);	           // bucket sort
+static int getBucketIndex(int value);
+static int getMax(int* a, int size);				   // radix sort
+static void countSort(int* a, int size, int exp);		
 
 
 /* Sorting Algorithm Function Definitions */
@@ -226,7 +226,7 @@ void bucketSort(int* a, int size) {
     }
 
     for (int i = 0; i < totalBuckets; ++i)
-	buckets[i] = insertionSort(buckets[i]);
+	buckets[i] = insertionSortBucketSort(buckets[i]);
 
     for (int j = 0, i = 0; i < totalBuckets; ++i) {
 	Node* node = buckets[i];
@@ -262,7 +262,7 @@ void radixSort(int* a, int size) {
 
 
 /***** Helper Function Definitions *****/
-void swap(int *n1, int *n2) {
+static void swap(int *n1, int *n2) {
     int temp = *n1;
     *n1 = *n2;
     *n2 = temp;
@@ -270,7 +270,7 @@ void swap(int *n1, int *n2) {
 
 
 
-int indexOfMin(int *a, int size, int starting_index) {
+static int indexOfMin(int *a, int size, int starting_index) {
     int index_of_min = starting_index;
     for (int i = starting_index + 1; i < size; ++i) {
 	if (a[i] < a[index_of_min])
@@ -281,7 +281,7 @@ int indexOfMin(int *a, int size, int starting_index) {
 
 
 
-void fixDown(int *a, int size, int index) {
+static void fixDown(int *a, int size, int index) {
     int index_of_left_child = index * 2 + 1;
     int index_of_right_child = index * 2 + 2;
     int index_of_largest_child = -1;
@@ -304,14 +304,14 @@ void fixDown(int *a, int size, int index) {
 
 
 
-void removeTheMax(int *a, int size) {
+static void removeTheMax(int *a, int size) {
     swap(&a[0], &a[size - 1]);
     fixDown(a, size - 1, 0);
 }
 
 
 
-void merge(int *a, int *L, int *R, int l, int m, int r) {
+static void merge(int *a, int *L, int *R, int l, int m, int r) {
     int i, j, k;
     int n1 = m - l + 1;
     int n2 = r - m;
@@ -354,7 +354,7 @@ void merge(int *a, int *L, int *R, int l, int m, int r) {
 
 
 
-int getMax(int* a, int size) {
+static int getMax(int* a, int size) {
     int max = a[0];
     for (int i = 1; i < size; ++i)
         if (a[i] > max)
@@ -364,7 +364,7 @@ int getMax(int* a, int size) {
 
 
 
-Node* insertionSort(Node* list) {
+static Node* insertionSortBucketSort(Node* list) {
     if (list == nullptr || list->next == nullptr)
 	return list;
     
@@ -407,13 +407,13 @@ Node* insertionSort(Node* list) {
 
 
 
-int getBucketIndex(int value) {
+static int getBucketIndex(int value) {
     return value / bucketInterval;
 }
 
 
 
-void countSort(int* a, int size, int exp) {
+static void countSort(int* a, int size, int exp) {
     int* output = new int[size];
     int count[10] = { 0 };
  
