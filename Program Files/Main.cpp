@@ -40,11 +40,11 @@ const std::string worstTimeComplexities[] = { "N^2", "N^2", "N^2", "N^2", "N^2",
 void validateCLA(int argc, char* argv[]);
 
 /* Creates an array of positive random integers with a given start and end range. */
-void randomizeArray(int *a, size_t size, int startRange, int endRange);
+void randomizeArray(int *numbers, size_t numbersSize, int startRange, int endRange);
 
 /* Initializes a vector of rectangles where the height of each rectangle at index "i" in the vector corresponds to the magnitude of the
    number at index "i" in the array. */
-void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* a, size_t size, double recWidth);
+void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* numbers, size_t numbersSize, double recWidth);
 
 /* Initializes the title diplayed in the window showing the sorting algorithms name and its time complexities. */
 void initializeTitle(sf::Text& title, sf::Font& font, const std::string& sortingAlgorithmSelected);
@@ -54,7 +54,7 @@ std::string createTitleString(const std::string& sortingAlgorithmSelected);
 
 /* Updates the height of each rectangle in the vector based on how the array has been sorted at some instantaneous point in time. By updating
    the heights, the current progress of the sorting process is kept up to date in the vector of rectangles. */
-void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int *a);
+void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int *numbers);
 
 /* Prints out all of the rectangles to the screen allowing it to be visualized how the array of integers looks during an instantaneous moment
    during the sorting process. */
@@ -141,25 +141,25 @@ void validateCLA(int argc, char* argv[]) {
 
 
 
-void randomizeArray(int *a, size_t size, int startRange, int endRange) {
+void randomizeArray(int *numbers, size_t numbersSize, int startRange, int endRange) {
     std::random_device device;
     std::mt19937 generator(device());
     std::uniform_int_distribution<int> dist(startRange, endRange);
 
-    for (size_t i = 0; i < size; ++i)
-	a[i] = dist(generator);
+    for (size_t i = 0; i < numbersSize; ++i)
+	numbers[i] = dist(generator);
 }
 
 
 
-void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* a, size_t size, double recWidth) {
-    for (size_t i = 0; i < size; ++i) {
+void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* numbers, size_t numbersSize, double recWidth) {
+    for (size_t i = 0; i < numbersSize; ++i) {
 	auto rec = std::make_shared<sf::RectangleShape>();
 	rec->setFillColor(sf::Color::Blue);
 	rec->setOutlineColor(sf::Color::Black);
 	rec->setOutlineThickness(1);
-	rec->setSize(sf::Vector2f(recWidth, a[i]));
-	rec->setPosition(sf::Vector2f(i * recWidth, windowHeight - a[i]));
+	rec->setSize(sf::Vector2f(recWidth, numbers[i]));
+	rec->setPosition(sf::Vector2f(i * recWidth, windowHeight - numbers[i]));
 	recs.push_back(rec);
     }
 }
@@ -214,15 +214,15 @@ std::string createTitleString(const std::string& sortingAlgorithmSelected) {
 
 
 
-void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int *a) {
+void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int *numbers) {
     sf::Vector2f temp;
     for (size_t i = 0; i < recs.size(); ++i) {
-	if (recs[i]->getSize().y != a[i]) {
+	if (recs[i]->getSize().y != numbers[i]) {
 	    temp.x = recs[i]->getSize().x;
-	    temp.y = a[i];
+	    temp.y = numbers[i];
 	    recs[i]->setSize(temp);
 	    temp.x = recs[i]->getPosition().x;
-	    temp.y = windowHeight - a[i];
+	    temp.y = windowHeight - numbers[i];
 	    recs[i]->setPosition(temp);
 	}
     }
