@@ -1,5 +1,5 @@
 # Author: Benjamin G. Friedman
-# Date: 11/08/2022
+# Date: 11/08/2021
 # File: Makefile
 # Description: Makefile for the sorting algorithms visualizer program.
 
