@@ -254,7 +254,7 @@ void assignSortingAlgorithm(void (**fpSortingAlgorithm)(int*, int), const std::s
     else if (sortingAlgorithmSelected == "heap")
 	*fpSortingAlgorithm = &heapSort;
     else if (sortingAlgorithmSelected == "merge")
-	*fpSortingAlgorithm = &mergeSortWrapper;
+	*fpSortingAlgorithm = &mergeSort;
     else if (sortingAlgorithmSelected == "counting")
 	*fpSortingAlgorithm = &countingSort;
     else if (sortingAlgorithmSelected == "radix")
