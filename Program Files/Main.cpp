@@ -5,8 +5,8 @@
   Description:
       - The main function for the sorting algorithms visualization. In summary, there is an array of positive integers
         and a vector of rectangle objects where the magnitude of an integer at index i corresponds to the height of the
-	rectangle at index i. As the array gets sorted, the heights of the rectangles simultaneously get updated to visualize
-	the sorting process.
+    rectangle at index i. As the array gets sorted, the heights of the rectangles simultaneously get updated to visualize
+    the sorting process.
 */
 
 
@@ -21,7 +21,7 @@
 #include "SortingAlgorithms.h"
 
 
-// Global variables
+/***** Global variables *****/
 // SFML window
 const int windowWidth = 1250;
 const int windowHeight = 600;
@@ -35,18 +35,20 @@ const std::string averageTimeComplexities[] = { "N^2", "N^2", "N^2", "depends on
 const std::string worstTimeComplexities[] = { "N^2", "N^2", "N^2", "N^2", "N^2", "Nlog(N)", "Nlog(N)", "N + K", "N^2", "NK" };
 
 
-/***** General Helper Functions *****/
+
+
+/***** Functions declared/defined in this file *****/
 /* Validates the command line arguments. */
 void validateCLA(int argc, char* argv[]);
 
 /* Creates an array of positive random integers with a given start and end range. */
-void randomizeArray(int *numbers, size_t numbersSize, int startRange, int endRange);
+void randomizeArray(int* numbers, size_t numbersSize, int startRange, int endRange);
 
 /* Initializes a vector of rectangles where the height of each rectangle at index "i" in the vector corresponds to the magnitude of the
    number at index "i" in the array. */
 void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* numbers, size_t numbersSize, double recWidth);
 
-/* Initializes the title diplayed in the window showing the sorting algorithms name and its time complexities. */
+/* Initializes the title diplayed in the window showing the sorting algorithm's name and its time complexities. */
 void initializeTitle(sf::Text& title, sf::Font& font, const std::string& sortingAlgorithmSelected);
 
 /* Creates the string for the title.  */
@@ -54,7 +56,7 @@ std::string createTitleString(const std::string& sortingAlgorithmSelected);
 
 /* Updates the height of each rectangle in the vector based on how the array has been sorted at some instantaneous point in time. By updating
    the heights, the current progress of the sorting process is kept up to date in the vector of rectangles. */
-void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int *numbers);
+void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* numbers);
 
 /* Prints out all of the rectangles to the screen allowing it to be visualized how the array of integers looks during an instantaneous moment
    during the sorting process. */
@@ -66,8 +68,8 @@ void assignSortingAlgorithm(void (**fpSortingAlgorithm)(int*, int), const std::s
 
 
 
-int main(int argc, char* argv[]) { 
-    
+int main(int argc, char* argv[]) {
+
     // Validate command line arguments
     validateCLA(argc, argv);
 
@@ -75,7 +77,7 @@ int main(int argc, char* argv[]) {
     std::vector<std::shared_ptr<sf::RectangleShape>> recs;    // Rectangles
     int numbers[totalNumbers];                                // Array to be sorted
     void (*fpSortingAlgorithm)(int*, int);                    // Sorting algorithm function
-    std::string sortingAlgorithmSelected(argv[1]);            
+    std::string sortingAlgorithmSelected(argv[1]);
     const double recWidth = static_cast<double>(windowWidth) / totalNumbers;
     sf::Font font;
     sf::Text title;
@@ -91,76 +93,76 @@ int main(int argc, char* argv[]) {
 
     while (window.isOpen())
     {
-	sf::Event event;
-	while (window.pollEvent(event)) {
-	    if (event.type == sf::Event::Closed)
-		window.close();
-	}
-	updateRectangles(recs, numbers);
-	printRectangles(recs, window, title);
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        updateRectangles(recs, numbers);
+        printRectangles(recs, window, title);
     }
 
-    
+
     sortingAlgorithm.join();
-    
+
     return 0;
 }
 
 
 
 
-/***** General Helper Function Defintions *****/
+/***** Functions declared/defined in this file *****/
 void validateCLA(int argc, char* argv[]) {
     if (argc != 3) {
-	std::cout << "Command line argument error. Expected \"./SortingAlgorithmVisualizer [sorting-algorithm-name] sort\"\n\n";
-	exit(1);
+        std::cout << "Command line argument error. Expected \"./SortingAlgorithmVisualizer [sorting-algorithm-name] sort\"\n\n";
+        exit(1);
     }
 
     std::string sortingAlgorithmSelected(argv[1]);
     std::string sort(argv[2]);
 
     if (sort != "sort") {
-	std::cout << "Command line argument error. Second command line argument must be the word \"sort\"\n\n";
-	exit(2);
+        std::cout << "Command line argument error. Second command line argument must be the word \"sort\"\n\n";
+        exit(2);
     }
 
     bool validSelection = false;
     for (size_t i = 0; i < acceptableSortingAlgorithmsSize && !validSelection; ++i) {
-	if (sortingAlgorithmSelected == acceptableSortingAlgorithms[i])
-	    validSelection = true;
+        if (sortingAlgorithmSelected == acceptableSortingAlgorithms[i])
+            validSelection = true;
     }
 
     if (!validSelection) {
-	std::cout << "Command line argument error. Valid sorting algorithms are as follows:\n";
-	for (size_t i = 0; i < acceptableSortingAlgorithmsSize && !validSelection; ++i)
-	    std::cout << acceptableSortingAlgorithms[i] << " sort" << std::endl;
-	std::cout << std::endl;
-	exit(3);
+        std::cout << "Command line argument error. Valid sorting algorithms are as follows:\n";
+        for (size_t i = 0; i < acceptableSortingAlgorithmsSize && !validSelection; ++i)
+            std::cout << acceptableSortingAlgorithms[i] << " sort" << std::endl;
+        std::cout << std::endl;
+        exit(3);
     }
 }
 
 
 
-void randomizeArray(int *numbers, size_t numbersSize, int startRange, int endRange) {
+void randomizeArray(int* numbers, size_t numbersSize, int startRange, int endRange) {
     std::random_device device;
     std::mt19937 generator(device());
     std::uniform_int_distribution<int> dist(startRange, endRange);
 
     for (size_t i = 0; i < numbersSize; ++i)
-	numbers[i] = dist(generator);
+        numbers[i] = dist(generator);
 }
 
 
 
 void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* numbers, size_t numbersSize, double recWidth) {
     for (size_t i = 0; i < numbersSize; ++i) {
-	auto rec = std::make_shared<sf::RectangleShape>();
-	rec->setFillColor(sf::Color::Blue);
-	rec->setOutlineColor(sf::Color::Black);
-	rec->setOutlineThickness(1);
-	rec->setSize(sf::Vector2f(recWidth, numbers[i]));
-	rec->setPosition(sf::Vector2f(i * recWidth, windowHeight - numbers[i]));
-	recs.push_back(rec);
+        auto rec = std::make_shared<sf::RectangleShape>();
+        rec->setFillColor(sf::Color::Blue);
+        rec->setOutlineColor(sf::Color::Black);
+        rec->setOutlineThickness(1);
+        rec->setSize(sf::Vector2f(recWidth, numbers[i]));
+        rec->setPosition(sf::Vector2f(i * recWidth, windowHeight - numbers[i]));
+        recs.push_back(rec);
     }
 }
 
@@ -168,14 +170,14 @@ void initializeRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs
 
 void initializeTitle(sf::Text& title, sf::Font& font, const std::string& sortingAlgorithmSelected) {
     if (!font.loadFromFile("arial.ttf")) {
-	std::cout << "Error. Failed to load font file\n\n";
-	exit(4);
+        std::cout << "Error. Failed to load font file\n\n";
+        exit(4);
     }
     title.setFont(font);
     title.setFillColor(sf::Color::Black);
     title.setCharacterSize(20);
     title.setString(createTitleString(sortingAlgorithmSelected));
-    
+
 }
 
 
@@ -184,26 +186,26 @@ std::string createTitleString(const std::string& sortingAlgorithmSelected) {
     std::string titleString(sortingAlgorithmSelected);
     size_t index;
     if (titleString == "bubble")
-	index = 0;
+        index = 0;
     else if (titleString == "selection")
-	index = 1;
+        index = 1;
     else if (titleString == "insertion")
-	index = 2;
+        index = 2;
     else if (titleString == "shell")
-	index = 3;
+        index = 3;
     else if (titleString == "quick")
-	index = 4;
+        index = 4;
     else if (titleString == "heap")
-	index = 5;
+        index = 5;
     else if (titleString == "merge")
-	index = 6;
+        index = 6;
     else if (titleString == "counting")
-	index = 7;
+        index = 7;
     else if (titleString == "radix")
-	index = 8;
+        index = 8;
     else if (titleString == "bucket")
-	index = 9;
-    
+        index = 9;
+
     titleString[0] = toupper(titleString[0]);
     titleString += " Sort                    Time Complexities     ";
     titleString += "BEST: " + bestTimeComplexities[index] + "     ";
@@ -214,17 +216,17 @@ std::string createTitleString(const std::string& sortingAlgorithmSelected) {
 
 
 
-void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int *numbers) {
+void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, const int* numbers) {
     sf::Vector2f temp;
     for (size_t i = 0; i < recs.size(); ++i) {
-	if (recs[i]->getSize().y != numbers[i]) {
-	    temp.x = recs[i]->getSize().x;
-	    temp.y = numbers[i];
-	    recs[i]->setSize(temp);
-	    temp.x = recs[i]->getPosition().x;
-	    temp.y = windowHeight - numbers[i];
-	    recs[i]->setPosition(temp);
-	}
+        if (recs[i]->getSize().y != numbers[i]) {
+            temp.x = recs[i]->getSize().x;
+            temp.y = numbers[i];
+            recs[i]->setSize(temp);
+            temp.x = recs[i]->getPosition().x;
+            temp.y = windowHeight - numbers[i];
+            recs[i]->setPosition(temp);
+        }
     }
 }
 
@@ -233,7 +235,7 @@ void updateRectangles(std::vector<std::shared_ptr<sf::RectangleShape>>& recs, co
 void printRectangles(const std::vector<std::shared_ptr<sf::RectangleShape>>& recs, sf::RenderWindow& window, const sf::Text& title) {
     window.clear(sf::Color::White);
     for (auto rec = recs.begin(); rec != recs.end(); ++rec)
-	window.draw(**rec);
+        window.draw(**rec);
     window.draw(title);
     window.display();
 }
@@ -242,23 +244,23 @@ void printRectangles(const std::vector<std::shared_ptr<sf::RectangleShape>>& rec
 
 void assignSortingAlgorithm(void (**fpSortingAlgorithm)(int*, int), const std::string& sortingAlgorithmSelected) {
     if (sortingAlgorithmSelected == "bubble")
-	*fpSortingAlgorithm = &bubbleSort;
+        *fpSortingAlgorithm = &bubbleSort;
     else if (sortingAlgorithmSelected == "selection")
-	*fpSortingAlgorithm = &selectionSort;
+        *fpSortingAlgorithm = &selectionSort;
     else if (sortingAlgorithmSelected == "insertion")
-	*fpSortingAlgorithm = &insertionSort;
+        *fpSortingAlgorithm = &insertionSort;
     else if (sortingAlgorithmSelected == "shell")
-	*fpSortingAlgorithm = &shellSort;
+        *fpSortingAlgorithm = &shellSort;
     else if (sortingAlgorithmSelected == "quick")
-	*fpSortingAlgorithm = &quickSort;
+        *fpSortingAlgorithm = &quickSort;
     else if (sortingAlgorithmSelected == "heap")
-	*fpSortingAlgorithm = &heapSort;
+        *fpSortingAlgorithm = &heapSort;
     else if (sortingAlgorithmSelected == "merge")
-	*fpSortingAlgorithm = &mergeSort;
+        *fpSortingAlgorithm = &mergeSort;
     else if (sortingAlgorithmSelected == "counting")
-	*fpSortingAlgorithm = &countingSort;
+        *fpSortingAlgorithm = &countingSort;
     else if (sortingAlgorithmSelected == "radix")
-	*fpSortingAlgorithm = &radixSort;
+        *fpSortingAlgorithm = &radixSort;
     else if (sortingAlgorithmSelected == "bucket")
-	*fpSortingAlgorithm = &bucketSort;
+        *fpSortingAlgorithm = &bucketSort;
 }
