@@ -11,5 +11,5 @@
 # Program Files
 - main.cpp - Main program.
 - SortingAlgorithms.h/SortingAlgorithms.cpp - Sorting algorithms interface.
-- Makefile - For compiling the program in Linux.
+- Makefile - For compiling the program.
 - artial.ttf - Text font file.
